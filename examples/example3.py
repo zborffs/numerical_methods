@@ -28,11 +28,9 @@ def arenstorf(t, x_vector, mu, mu_prime):
         y - 2 * xdot - mu_prime * y / D1 - mu * y / D2
     ])
 
-
 mu = 0.012277471
 mu_prime = 1 - mu
-epsilon = 1e-12
-y0 = np.array([0.994, 0.0, 0.0, -2.001585106])
+y0 = np.array([0.994, 0.0, 0.0, -2.00158510637908252240537862224])
 f = lambda t, x: arenstorf(t, x, mu, mu_prime)
 
 # independent variables
@@ -44,7 +42,7 @@ duration = {}
 for method in methods:
     for tmax in tmaxes:
         start = time.time()
-        sol = solve_ivp(f, (0, tmax), y0, method=method, atol=epsilon, rtol=epsilon)
+        sol = solve_ivp(f, (0, tmax), y0, method=method, atol=1e-12, rtol=1e-12)
         stop = time.time()
         if method in duration:
             v = duration[method]
@@ -57,8 +55,6 @@ for method in methods:
         plt.title(f"Arenstorf orbit T={tmax}, method={method}")
         plt.xlabel("y1")
         plt.ylabel("y2")
-        # plt.xlim((-1.5, 1.5))
-        # plt.ylim((-1.5, 1.5))
         plt.grid()
         plt.savefig(f'/Users/zachbortoff/Documents/Documents - Zach’s MacBook Pro (2)/school/csmc661/numerical_methods/figures/example3/{tmax}_{method}.png')
         # plt.show()
